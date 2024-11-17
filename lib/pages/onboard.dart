@@ -1,253 +1,125 @@
-// import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:random_string/random_string.dart';
-import 'package:yumm_yum/services/database.dart';
-import 'package:yumm_yum/services/shared_pref.dart';
-import 'package:yumm_yum/pages/bottomnav.dart';
-import 'package:yumm_yum/pages/login.dart';
-import 'package:yumm_yum/services/database.dart';
-import 'package:yumm_yum/services/shared_pref.dart';
+import 'package:yumm_yum/pages/signup.dart';
+import 'package:yumm_yum/widgets/content_model.dart';
 import 'package:yumm_yum/widgets/widget_support.dart';
-import 'package:random_string/random_string.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class Onboard extends StatefulWidget {
+  const Onboard({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<Onboard> createState() => _OnboardState();
 }
 
-class _SignUpState extends State<SignUp> {
-  String email = "", password = "", name = "";
+class _OnboardState extends State<Onboard> {
+  int currentIndex = 0;
+  late PageController _controller;
 
-  TextEditingController namecontroller = new TextEditingController();
+  @override
+  void initState() {
+    _controller = PageController(initialPage: 0);
 
-  TextEditingController passwordcontroller = new TextEditingController();
+    super.initState();
+  }
 
-  TextEditingController mailcontroller = new TextEditingController();
-
-  final _formkey = GlobalKey<FormState>();
-
-  registration() async {
-    if (password != null) {
-      try {
-        UserCredential userCredential = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: email, password: password);
-
-        ScaffoldMessenger.of(context).showSnackBar((SnackBar(
-            backgroundColor: Colors.redAccent,
-            content: Text(
-              "Registered Successfully",
-              style: TextStyle(fontSize: 20.0),
-            ))));
-        String Id = randomAlphaNumeric(10);
-        Map<String, dynamic> addUserInfo = {
-          "Name": namecontroller.text,
-          "Email": mailcontroller.text,
-          "Wallet": "0",
-          "Id": Id,
-        };
-        await DatabaseMethods().addUserDetail(addUserInfo, Id);
-        await SharedPreferenceHelper().saveUserName(namecontroller.text);
-        await SharedPreferenceHelper().saveUserEmail(mailcontroller.text);
-        await SharedPreferenceHelper().saveUserWallet('0');
-        await SharedPreferenceHelper().saveUserId(Id);
-
-        if (mounted) {}
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => BottomNav()));
-      } on FirebaseException catch (e) {
-        if (e.code == 'weak-password') {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: Colors.orangeAccent,
-              content: Text(
-                "Password Provided is too Weak",
-                style: TextStyle(fontSize: 18.0),
-              )));
-        } else if (e.code == "email-already-in-use") {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: Colors.orangeAccent,
-              content: Text(
-                "Account Already exsists",
-                style: TextStyle(fontSize: 18.0),
-              )));
-        }
-      }
-    }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Stack(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 2.5,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                    Color(0xFFff5c30),
-                    Color(0xFFe74b1a),
-                  ])),
-            ),
-            Container(
-              margin:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 3),
-              height: MediaQuery.of(context).size.height / 2,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40))),
-              child: Text(""),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
-              child: Column(
-                children: [
-                  Center(
-                      child: Image.asset(
-                    "images/logo.png",
-                    width: MediaQuery.of(context).size.width / 1.5,
-                    fit: BoxFit.cover,
-                  )),
-                  SizedBox(
-                    height: 50.0,
-                  ),
-                  Material(
-                    elevation: 5.0,
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 1.8,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Form(
-                        key: _formkey,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            Text(
-                              "Sign up",
-                              //style: AppWidget.HeadlineTextFeildStyle(),
-                            ),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            TextFormField(
-                              controller: namecontroller,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please Enter Name';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                  hintText: 'Name',
-                                  //hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                                  prefixIcon: Icon(Icons.person_outlined)),
-                            ),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            TextFormField(
-                              controller: mailcontroller,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please Enter E-mail';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                  hintText: 'Email',
-                                  //hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                                  prefixIcon: Icon(Icons.email_outlined)),
-                            ),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            TextFormField(
-                              controller: passwordcontroller,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please Enter Password';
-                                }
-                                return null;
-                              },
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                  hintText: 'Password',
-                                  //hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                                  prefixIcon: Icon(Icons.password_outlined)),
-                            ),
-                            SizedBox(
-                              height: 80.0,
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                if (_formkey.currentState!.validate()) {
-                                  setState(() {
-                                    email = mailcontroller.text;
-                                    name = namecontroller.text;
-                                    password = passwordcontroller.text;
-                                  });
-                                }
-                                registration();
-                              },
-                              child: Material(
-                                elevation: 5.0,
-                                borderRadius: BorderRadius.circular(20),
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                                  width: 200,
-                                  decoration: BoxDecoration(
-                                      color: Color(0Xffff5722),
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Center(
-                                      child: Text(
-                                    "SIGN UP",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18.0,
-                                        fontFamily: 'Poppins1',
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                                ),
-                              ),
-                            ),
-                          ],
+      body: Column(
+        children: [
+          Expanded(
+            child: PageView.builder(
+                controller: _controller,
+                itemCount: contents.length,
+                onPageChanged: (int index) {
+                  setState(() {
+                    currentIndex = index;
+                  });
+                },
+                itemBuilder: (_, i) {
+                  return Padding(
+                    padding:
+                        EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          contents[i].image,
+                          height: 450,
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.fill,
                         ),
-                      ),
+                        SizedBox(
+                          height: 40.0,
+                        ),
+                        Text(
+                          contents[i].title,
+                          // style: AppWidget.HeadlineTextFeildStyle(),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Text(
+                          contents[i].description,
+                          // style: AppWidget.LightTextFeildStyle(),
+                        )
+                      ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 70.0,
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => LogIn()));
-                      },
-                      child: Text(
-                        "Already have an account? Login",
-                        //style: AppWidget.semiBoldTextFeildStyle(),
-                      ))
-                ],
+                  );
+                }),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                contents.length,
+                (index) => buildDot(index, context),
               ),
-            )
-          ],
-        ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              if (currentIndex == contents.length - 1) {
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => SignUp()));
+              }
+              _controller.nextPage(
+                  duration: Duration(milliseconds: 100),
+                  curve: Curves.bounceIn);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.red, borderRadius: BorderRadius.circular(20)),
+              height: 60,
+              margin: EdgeInsets.all(40),
+              width: double.infinity,
+              child: Center(
+                child: Text(
+                  currentIndex == contents.length - 1 ? "Start" : "Next",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          )
+        ],
       ),
+    );
+  }
+
+  Container buildDot(int index, BuildContext context) {
+    return Container(
+      height: 10.0,
+      width: currentIndex == index ? 18 : 7,
+      margin: EdgeInsets.only(right: 5),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6), color: Colors.black38),
     );
   }
 }

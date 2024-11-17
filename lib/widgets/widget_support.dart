@@ -1,23 +1,35 @@
-class UnboardingContent {
-  String image;
-  String title;
-  String description;
-  UnboardingContent(
-      {required this.description, required this.image, required this.title});
-}
+import 'package:flutter/material.dart';
 
-List<UnboardingContent> contents = [
-  UnboardingContent(
-      description: 'Pick your food from our menu\n          More than 35 times',
-      image: "images/screen1.png",
-      title: 'Select from Our\n       Best Menu'),
-  UnboardingContent(
-      description:
-          'You can pay cash on delivery and\n     Card payment is available',
-      image: "images/screen2.png",
-      title: 'Easy and Online Payment'),
-  UnboardingContent(
-      description: 'Deliver your food at your\n               Doorstep',
-      image: "images/screen3.png",
-      title: 'Quick Delivery at\n    Your Doorstep')
-];
+class AppWidget {
+  static TextStyle boldTextFeildStyle() {
+    return TextStyle(
+        color: Colors.black,
+        fontSize: 20.0,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Poppins');
+  }
+
+  static TextStyle HeadlineTextFeildStyle() {
+    return TextStyle(
+        color: Colors.black,
+        fontSize: 24.0,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Poppins');
+  }
+
+  static TextStyle LightTextFeildStyle() {
+    return TextStyle(
+        color: Colors.black54,
+        fontSize: 15.0,
+        fontWeight: FontWeight.w500,
+        fontFamily: 'Poppins');
+  }
+
+  static TextStyle semiBoldTextFeildStyle() {
+    return TextStyle(
+        color: Colors.black,
+        fontSize: 18.0,
+        fontWeight: FontWeight.w500,
+        fontFamily: 'Poppins');
+  }
+}
