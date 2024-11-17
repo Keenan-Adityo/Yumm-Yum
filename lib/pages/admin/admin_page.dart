@@ -19,7 +19,7 @@ class _AdminPageState extends State<AdminPage> {
             const Center(
               child: Text(
                 "Home Admin",
-                // style: AppWidget.HeadlineTextFeildStyle(),
+                //style: AppWidget.HeadlineTextFeildStyle(),
               ),
             ),
             const SizedBox(

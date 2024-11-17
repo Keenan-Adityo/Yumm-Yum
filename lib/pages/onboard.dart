@@ -1,14 +1,15 @@
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:random_string/random_string.dart';
+import 'package:yumm_yum/services/database.dart';
+import 'package:yumm_yum/services/shared_pref.dart';
 import 'package:yumm_yum/pages/bottomnav.dart';
 import 'package:yumm_yum/pages/login.dart';
 import 'package:yumm_yum/services/database.dart';
 import 'package:yumm_yum/services/shared_pref.dart';
 import 'package:yumm_yum/widgets/widget_support.dart';
-
 import 'package:random_string/random_string.dart';
-import 'package:yumm_yum/services/database.dart';
-import 'package:yumm_yum/services/shared_pref.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -31,7 +32,6 @@ class _SignUpState extends State<SignUp> {
   registration() async {
     if (password != null) {
       try {
-        print("masuk regis");
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
 
@@ -54,7 +54,7 @@ class _SignUpState extends State<SignUp> {
         await SharedPreferenceHelper().saveUserWallet('0');
         await SharedPreferenceHelper().saveUserId(Id);
 
-        // ignore: use_build_context_synchronously
+        if (mounted) {}
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => BottomNav()));
       } on FirebaseException catch (e) {
@@ -139,7 +139,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             Text(
                               "Sign up",
-                              // style: AppWidget.HeadlineTextFeildStyle(),
+                              //style: AppWidget.HeadlineTextFeildStyle(),
                             ),
                             SizedBox(
                               height: 30.0,
@@ -154,7 +154,7 @@ class _SignUpState extends State<SignUp> {
                               },
                               decoration: InputDecoration(
                                   hintText: 'Name',
-                                  // hintStyle: AppWidget.semiBoldTextFeildStyle(),
+                                  //hintStyle: AppWidget.semiBoldTextFeildStyle(),
                                   prefixIcon: Icon(Icons.person_outlined)),
                             ),
                             SizedBox(
@@ -170,7 +170,7 @@ class _SignUpState extends State<SignUp> {
                               },
                               decoration: InputDecoration(
                                   hintText: 'Email',
-                                  // hintStyle: AppWidget.semiBoldTextFeildStyle(),
+                                  //hintStyle: AppWidget.semiBoldTextFeildStyle(),
                                   prefixIcon: Icon(Icons.email_outlined)),
                             ),
                             SizedBox(
@@ -187,7 +187,7 @@ class _SignUpState extends State<SignUp> {
                               obscureText: true,
                               decoration: InputDecoration(
                                   hintText: 'Password',
-                                  // hintStyle: AppWidget.semiBoldTextFeildStyle(),
+                                  //hintStyle: AppWidget.semiBoldTextFeildStyle(),
                                   prefixIcon: Icon(Icons.password_outlined)),
                             ),
                             SizedBox(
