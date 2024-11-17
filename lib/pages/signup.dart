@@ -5,7 +5,10 @@ import 'package:yumm_yum/pages/login.dart';
 import 'package:yumm_yum/services/database.dart';
 import 'package:yumm_yum/services/shared_pref.dart';
 import 'package:yumm_yum/widgets/widget_support.dart';
+
 import 'package:random_string/random_string.dart';
+import 'package:yumm_yum/services/database.dart';
+import 'package:yumm_yum/services/shared_pref.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -28,6 +31,7 @@ class _SignUpState extends State<SignUp> {
   registration() async {
     if (password != null) {
       try {
+        print("masuk regis");
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
 
