@@ -1,10 +1,12 @@
 import 'dart:async';
 
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-// import 'package:yumm-yum/service/database.dart';
-// import 'package:yumm-yum/service/shared_pref.dart';
-// import 'package:yumm-yum/widget/widget_support.dart';
+import 'package:yumm_yum/services/database.dart';
+import 'package:yumm_yum/services/shared_pref.dart';
+import 'package:yumm_yum/services/database.dart';
+import 'package:yumm_yum/services/shared_pref.dart';
+import 'package:yumm_yum/widgets/widget_support.dart';
 
 class Order extends StatefulWidget {
   const Order({super.key});
@@ -32,7 +34,7 @@ class _OrderState extends State<Order> {
 
   ontheload() async {
     await getthesharedpref();
-    foodStream = await DatabaseMethods().getFoodCart(id!);
+    // foodStream = await DatabaseMethods().getFoodCart(id!);
     setState(() {});
   }
 
@@ -56,7 +58,7 @@ class _OrderState extends State<Order> {
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
-                    // DocumentSnapshot ds = snapshot.data.docs[index];
+                    DocumentSnapshot ds = snapshot.data.docs[index];
                     total = total + int.parse(ds["Total"]);
                     return Container(
                       margin: EdgeInsets.only(

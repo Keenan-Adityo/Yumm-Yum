@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fooddeliveryapp/pages/bottomnav.dart';
-import 'package:fooddeliveryapp/pages/login.dart';
-import 'package:fooddeliveryapp/service/database.dart';
-import 'package:fooddeliveryapp/service/shared_pref.dart';
-import 'package:fooddeliveryapp/widget/widget_support.dart';
+import 'package:yumm_yum/pages/bottomnav.dart';
+import 'package:yumm_yum/pages/login.dart';
+import 'package:yumm_yum/services/database.dart';
+import 'package:yumm_yum/services/shared_pref.dart';
+import 'package:yumm_yum/widgets/widget_support.dart';
 import 'package:random_string/random_string.dart';
 
 class SignUp extends StatefulWidget {
@@ -236,7 +236,7 @@ class _SignUpState extends State<SignUp> {
                       },
                       child: Text(
                         "Already have an account? Login",
-                        // style: AppWidget.semiBoldTextFeildStyle(),
+                        //style: AppWidget.semiBoldTextFeildStyle(),
                       ))
                 ],
               ),

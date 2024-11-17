@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-//import 'package:flutter_stripe/flutter_stripe.dart';
-//import 'package:yumm-yum/service/database.dart';
-//import 'package:yumm-yum/service/shared_pref.dart';
-//import 'package:yumm-yum/widget/app_constant.dart';
-//import 'package:yumm-yum/widget/widget_support.dart';
-//import 'package:http/http.dart' as http;
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:yumm_yum/services/database.dart';
+import 'package:yumm_yum/services/shared_pref.dart';
+// import 'package:yumm_yum/widgets/app_constant.dart';
+import 'package:yumm_yum/widgets/widget_support.dart';
+import 'package:http/http.dart' as http;
 
 class Wallet extends StatefulWidget {
   const Wallet({super.key});
@@ -21,11 +21,11 @@ class _WalletState extends State<Wallet> {
   int? add;
   TextEditingController amountcontroller = new TextEditingController();
 
-  //getthesharedpref() async {
-    //wallet = await SharedPreferenceHelper().getUserWallet();
-    //id = await SharedPreferenceHelper().getUserId();
-    //setState(() {});
-  //}
+  getthesharedpref() async {
+    wallet = await SharedPreferenceHelper().getUserWallet();
+    id = await SharedPreferenceHelper().getUserId();
+    setState(() {});
+  }
 
   ontheload() async {
     await getthesharedpref();
@@ -210,13 +210,13 @@ class _WalletState extends State<Wallet> {
   Future<void> makePayment(String amount) async {
     try {
       paymentIntent = await createPaymentIntent(amount, 'INR');
-      Payment Sheet
+      //Payment Sheet
       await Stripe.instance
           .initPaymentSheet(
               paymentSheetParameters: SetupPaymentSheetParameters(
                   paymentIntentClientSecret: paymentIntent!['client_secret'],
-                   applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
-                   googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
+                  // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
+                  // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
                   style: ThemeMode.dark,
                   merchantDisplayName: 'Adnan'))
           .then((value) {});
@@ -274,28 +274,28 @@ class _WalletState extends State<Wallet> {
 
   //  Future<Map<String, dynamic>>
   createPaymentIntent(String amount, String currency) async {
-    try {
-      Map<String, dynamic> body = {
-        'amount': calculateAmount(amount),
-        'currency': currency,
-        'payment_method_types[]': 'card'
-      };
+    // try {
+    //   Map<String, dynamic> body = {
+    //     'amount': calculateAmount(amount),
+    //     'currency': currency,
+    //     'payment_method_types[]': 'card'
+    //   };
 
-      // var response = await http.post(
-      //   Uri.parse('https://api.stripe.com/v1/payment_intents'),
-      //   headers: {
-      //     'Authorization': 'Bearer $secretKey',
-      //     'Content-Type': 'application/x-www-form-urlencoded'
-      //   },
-      //   body: body,
-      // );
-      // ignore: avoid_print
+    //   var response = await http.post(
+    //     Uri.parse('https://api.stripe.com/v1/payment_intents'),
+    //     headers: {
+    //       'Authorization': 'Bearer $secretKey',
+    //       'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     body: body,
+    //   );
+    //   // ignore: avoid_print
     //   print('Payment Intent Body->>> ${response.body.toString()}');
     //   return jsonDecode(response.body);
     // } catch (err) {
     //   // ignore: avoid_print
     //   print('err charging user: ${err.toString()}');
-    }
+    // }
   }
 
   calculateAmount(String amount) {

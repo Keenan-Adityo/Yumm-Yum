@@ -1,10 +1,12 @@
 import 'dart:async';
 
-//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-//import 'package:yumm-yum/service/database.dart';
-//import 'package:yumm-yum/service/shared_pref.dart';
-//import 'package:yumm-yum/widget/widget_support.dart';
+import 'package:yumm_yum/services/database.dart';
+import 'package:yumm_yum/services/shared_pref.dart';
+import 'package:yumm_yum/services/database.dart';
+import 'package:yumm_yum/services/shared_pref.dart';
+import 'package:yumm_yum/widgets/widget_support.dart';
 
 class Order extends StatefulWidget {
   const Order({super.key});
@@ -24,24 +26,24 @@ class _OrderState extends State<Order> {
     });
   }
 
-  //getthesharedpref() async {
-  //id = await SharedPreferenceHelper().getUserId();
-  //wallet = await SharedPreferenceHelper().getUserWallet();
-  //setState(() {});
-  //}
+  getthesharedpref() async {
+    id = await SharedPreferenceHelper().getUserId();
+    wallet = await SharedPreferenceHelper().getUserWallet();
+    setState(() {});
+  }
 
-  //ontheload() async {
-  //await getthesharedpref();
-  //foodStream = await DatabaseMethods().getFoodCart(id!);
-  //setState(() {});
-  //}
+  ontheload() async {
+    await getthesharedpref();
+    // foodStream = await DatabaseMethods().getFoodCart(id!);
+    setState(() {});
+  }
 
   @override
-  //void initState() {
-  //ontheload();
-  //startTimer();
-  //super.initState();
-  //}
+  void initState() {
+    ontheload();
+    startTimer();
+    super.initState();
+  }
 
   Stream? foodStream;
 
