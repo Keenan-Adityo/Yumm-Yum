@@ -1,13 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:yumm_yum/pages/signup.dart'; // Sesuaikan dengan path file SignUp.dart Anda
-import 'package:yumm_yum/pages/login.dart'; // Sesuaikan dengan path file LogIn.dart Anda
-import 'package:yumm_yum/pages/bottomnav.dart'; // Sesuaikan dengan path file BottomNav.dart Anda
+import 'package:yumm_yum/pages/signup.dart'; 
+import 'package:yumm_yum/pages/login.dart'; 
+import 'package:yumm_yum/pages/bottomnav.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); 
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
