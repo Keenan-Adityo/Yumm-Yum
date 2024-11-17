@@ -14,16 +14,16 @@ class _HomeAdminState extends State<HomeAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
+        margin: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
         child: Column(
           children: [
-            Center(
+            const Center(
               child: Text(
                 "Home Admin",
                 // style: AppWidget.HeadlineTextFeildStyle(),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50.0,
             ),
             GestureDetector(
@@ -36,7 +36,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                 borderRadius: BorderRadius.circular(10),
                 child: Center(
                   child: Container(
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(10),
@@ -44,7 +44,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                     child: Row(
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(6.0),
+                          padding: const EdgeInsets.all(6.0),
                           child: Image.asset(
                             "assets/images/food.jpg",
                             height: 100,
@@ -52,10 +52,10 @@ class _HomeAdminState extends State<HomeAdmin> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 30.0,
                         ),
-                        Text(
+                        const Text(
                           "Add Food Items",
                           style: TextStyle(
                               color: Colors.white,
