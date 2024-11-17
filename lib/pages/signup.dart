@@ -2,10 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:yumm_yum/pages/bottomnav.dart';
 import 'package:yumm_yum/pages/login.dart';
-// import 'package:fooddeliveryapp/service/database.dart';
-// import 'package:fooddeliveryapp/service/shared_pref.dart';
-// import 'package:fooddeliveryapp/widget/widget_support.dart';
 import 'package:random_string/random_string.dart';
+import 'package:yumm_yum/services/database.dart';
+import 'package:yumm_yum/services/shared_pref.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -28,6 +27,7 @@ class _SignUpState extends State<SignUp> {
   registration() async {
     if (password != null) {
       try {
+        print("masuk regis");
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
 
@@ -44,11 +44,11 @@ class _SignUpState extends State<SignUp> {
           "Wallet": "0",
           "Id": Id,
         };
-        // await DatabaseMethods().addUserDetail(addUserInfo, Id);
-        // await SharedPreferenceHelper().saveUserName(namecontroller.text);
-        // await SharedPreferenceHelper().saveUserEmail(mailcontroller.text);
-        // await SharedPreferenceHelper().saveUserWallet('0');
-        // await SharedPreferenceHelper().saveUserId(Id);
+        await DatabaseMethods().addUserDetail(addUserInfo, Id);
+        await SharedPreferenceHelper().saveUserName(namecontroller.text);
+        await SharedPreferenceHelper().saveUserEmail(mailcontroller.text);
+        await SharedPreferenceHelper().saveUserWallet('0');
+        await SharedPreferenceHelper().saveUserId(Id);
 
         // ignore: use_build_context_synchronously
         Navigator.pushReplacement(

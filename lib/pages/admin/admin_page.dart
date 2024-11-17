@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:yumm_yum/pages/admin/add_food_page.dart';
-// import 'package:fooddeliveryapp/admin/add_food.dart';
-// import 'package:fooddeliveryapp/widget/widget_support.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
