@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:yumm_yum/pages/admin/add_food_page.dart';
 // import 'package:fooddeliveryapp/admin/add_food.dart';
 // import 'package:fooddeliveryapp/widget/widget_support.dart';
 
-class HomeAdmin extends StatefulWidget {
-  const HomeAdmin({super.key});
+class AdminPage extends StatefulWidget {
+  const AdminPage({super.key});
 
   @override
-  State<HomeAdmin> createState() => _HomeAdminState();
+  State<AdminPage> createState() => _AdminPageState();
 }
 
-class _HomeAdminState extends State<HomeAdmin> {
+class _AdminPageState extends State<AdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,8 +29,8 @@ class _HomeAdminState extends State<HomeAdmin> {
             ),
             GestureDetector(
               onTap: () {
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => AddFood()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddFoodPage()));
               },
               child: Material(
                 elevation: 10.0,
