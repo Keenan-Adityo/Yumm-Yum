@@ -20,7 +20,7 @@ class _HomeAdminState extends State<HomeAdmin> {
             Center(
               child: Text(
                 "Home Admin",
-                // style: AppWidget.HeadlineTextFeildStyle(),
+                //style: AppWidget.HeadlineTextFeildStyle(),
               ),
             ),
             SizedBox(
