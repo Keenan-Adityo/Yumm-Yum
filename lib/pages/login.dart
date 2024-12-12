@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:yumm_yum/pages/admin/admin_login_page.dart';
 import 'package:yumm_yum/pages/bottomnav.dart';
 import 'package:yumm_yum/pages/forgotpassword.dart';
 import 'package:yumm_yum/pages/signup.dart';
+import 'package:yumm_yum/widgets/widget_support.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -64,8 +66,8 @@ class _LogInState extends State<LogIn> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                    Color(0xFFff5c30),
-                    Color(0xFFe74b1a),
+                    Color(0xFFD57F42),
+                    Color(0xFFD57F42),
                   ])),
             ),
             // Bagian putih di bawah
@@ -85,12 +87,12 @@ class _LogInState extends State<LogIn> {
               margin: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
               child: Column(
                 children: [
-                  Center(
-                      child: Image.asset(
-                    "images/logo.png",
-                    width: MediaQuery.of(context).size.width / 1.5,
-                    fit: BoxFit.cover,
-                  )),
+                  // Center(
+                  //     child: Image.asset(
+                  //   "assets/images/logo.png",
+                  //   width: MediaQuery.of(context).size.width / 1.5,
+                  //   fit: BoxFit.cover,
+                  // )),
                   SizedBox(
                     height: 50.0,
                   ),
@@ -113,7 +115,7 @@ class _LogInState extends State<LogIn> {
                             ),
                             Text(
                               "Login",
-                              // style: AppWidget.HeadlineTextFeildStyle(),
+                              style: AppWidget.HeadlineTextFeildStyle(),
                             ),
                             SizedBox(
                               height: 30.0,
@@ -190,7 +192,7 @@ class _LogInState extends State<LogIn> {
                                   padding: EdgeInsets.symmetric(vertical: 8.0),
                                   width: 200,
                                   decoration: BoxDecoration(
-                                      color: Color(0Xffff5722),
+                                      color: Color(0XffD57F42),
                                       borderRadius: BorderRadius.circular(20)),
                                   child: Center(
                                       child: Text(
@@ -214,14 +216,27 @@ class _LogInState extends State<LogIn> {
                   ),
                   // Navigasi ke halaman sign up
                   GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => SignUp()));
-                      },
-                      child: Text(
-                        "Don't have an account? Sign up",
-                        // style: AppWidget.semiBoldTextFeildStyle(),
-                      ))
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => SignUp()));
+                    },
+                    child: Text(
+                      "Don't have an account? Sign up",
+                      // style: AppWidget.semiBoldTextFeildStyle(),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AdminLoginPage()));
+                    },
+                    child: Text(
+                      "Admin?",
+                      style: AppWidget.semiBoldTextFeildStyle(),
+                    ),
+                  ),
                 ],
               ),
             )

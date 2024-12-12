@@ -1,9 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-// import 'package:fooddeliveryapp/pages/home.dart';
-// import 'package:fooddeliveryapp/pages/order.dart';
-// import 'package:fooddeliveryapp/pages/profile.dart';
-// import 'package:fooddeliveryapp/pages/wallet.dart';
+import 'package:yumm_yum/pages/home.dart';
+import 'package:yumm_yum/pages/order.dart';
+import 'package:yumm_yum/pages/profile.dart';
+import 'package:yumm_yum/pages/wallet.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -15,20 +15,18 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int currentTabIndex = 0;
 
-  // late List<Widget> pages;
-  // late Widget currentPage;
-  // late Home homepage;
-  // late Profile profile;
-  // late Order order;
-  // late Wallet wallet;
+  late List<Widget> pages;
+  late Widget currentPage;
+  late Home homepage;
+  late Profile profile;
+  late Order order;
 
   @override
   void initState() {
-    // homepage = Home();
-    // order = Order();
-    // profile = Profile();
-    // wallet = Wallet();
-    // pages = [homepage, order, wallet, profile];
+    homepage = Home();
+    order = Order();
+    profile = Profile();
+    pages = [homepage, order, profile];
     super.initState();
   }
 
@@ -38,7 +36,7 @@ class _BottomNavState extends State<BottomNav> {
       bottomNavigationBar: CurvedNavigationBar(
           height: 65,
           backgroundColor: Colors.white,
-          color: Colors.black,
+          color: Color(0xffD57F42),
           animationDuration: Duration(milliseconds: 500),
           onTap: (int index) {
             setState(() {
@@ -55,20 +53,11 @@ class _BottomNavState extends State<BottomNav> {
               color: Colors.white,
             ),
             Icon(
-              Icons.wallet_outlined,
-              color: Colors.white,
-            ),
-            Icon(
               Icons.person_outline,
               color: Colors.white,
             )
           ]),
-      body: Center(
-        child: Text(
-          'Page $currentTabIndex', // Placeholder untuk halaman
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      body: pages[currentTabIndex],
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yumm_yum/pages/admin/add_food_page.dart';
+import 'package:yumm_yum/widgets/widget_support.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
@@ -16,10 +17,10 @@ class _AdminPageState extends State<AdminPage> {
         margin: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
         child: Column(
           children: [
-            const Center(
+            Center(
               child: Text(
-                "Home Admin",
-                //style: AppWidget.HeadlineTextFeildStyle(),
+                "Dashboard Admin",
+                style: AppWidget.HeadlineTextFeildStyle(),
               ),
             ),
             const SizedBox(
@@ -37,7 +38,7 @@ class _AdminPageState extends State<AdminPage> {
                   child: Container(
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
-                      color: Colors.black,
+                      color: Color(0xffD57F42),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(

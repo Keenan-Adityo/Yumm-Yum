@@ -63,7 +63,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               height: 10.0,
             ),
             Text(
-              "Enter your mail",
+              "Enter your E-mail",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
@@ -157,7 +157,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 child: Text(
                                   "Create",
                                   style: TextStyle(
-                                      color: Color.fromARGB(225, 184, 166, 6),
+                                      color: Color(0xFFD57F42),
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.w500),
                                 ),

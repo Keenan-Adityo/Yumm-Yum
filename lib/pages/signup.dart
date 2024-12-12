@@ -91,8 +91,8 @@ class _SignUpState extends State<SignUp> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                    Color(0xFFff5c30),
-                    Color(0xFFe74b1a),
+                    Color(0xFFD57F42),
+                    Color(0xFFD57F42),
                   ])),
             ),
             Container(
@@ -111,12 +111,12 @@ class _SignUpState extends State<SignUp> {
               margin: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
               child: Column(
                 children: [
-                  Center(
-                      child: Image.asset(
-                    "images/logo.png",
-                    width: MediaQuery.of(context).size.width / 1.5,
-                    fit: BoxFit.cover,
-                  )),
+                  // Center(
+                  //     child: Image.asset(
+                  //   "assets/images/logo.png",
+                  //   width: MediaQuery.of(context).size.width / 1.5,
+                  //   fit: BoxFit.cover,
+                  // )),
                   SizedBox(
                     height: 50.0,
                   ),
@@ -139,7 +139,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             Text(
                               "Sign up",
-                              // style: AppWidget.HeadlineTextFeildStyle(),
+                              style: AppWidget.HeadlineTextFeildStyle(),
                             ),
                             SizedBox(
                               height: 30.0,
@@ -170,7 +170,7 @@ class _SignUpState extends State<SignUp> {
                               },
                               decoration: InputDecoration(
                                   hintText: 'Email',
-                                  // hintStyle: AppWidget.semiBoldTextFeildStyle(),
+                                  hintStyle: AppWidget.semiBoldTextFeildStyle(),
                                   prefixIcon: Icon(Icons.email_outlined)),
                             ),
                             SizedBox(
@@ -187,7 +187,7 @@ class _SignUpState extends State<SignUp> {
                               obscureText: true,
                               decoration: InputDecoration(
                                   hintText: 'Password',
-                                  // hintStyle: AppWidget.semiBoldTextFeildStyle(),
+                                  hintStyle: AppWidget.semiBoldTextFeildStyle(),
                                   prefixIcon: Icon(Icons.password_outlined)),
                             ),
                             SizedBox(
@@ -211,7 +211,7 @@ class _SignUpState extends State<SignUp> {
                                   padding: EdgeInsets.symmetric(vertical: 8.0),
                                   width: 200,
                                   decoration: BoxDecoration(
-                                      color: Color(0Xffff5722),
+                                      color: Color(0XffD57F42),
                                       borderRadius: BorderRadius.circular(20)),
                                   child: Center(
                                       child: Text(
@@ -240,7 +240,7 @@ class _SignUpState extends State<SignUp> {
                       },
                       child: Text(
                         "Already have an account? Login",
-                        //style: AppWidget.semiBoldTextFeildStyle(),
+                        style: AppWidget.semiBoldTextFeildStyle(),
                       ))
                 ],
               ),
