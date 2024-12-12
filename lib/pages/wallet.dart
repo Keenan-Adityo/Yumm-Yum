@@ -70,7 +70,7 @@ class _WalletState extends State<Wallet> {
                     child: Row(
                       children: [
                         Image.asset(
-                          "images/wallet.png",
+                          "assets/images/wallet.png",
                           height: 60,
                           width: 60,
                           fit: BoxFit.cover,

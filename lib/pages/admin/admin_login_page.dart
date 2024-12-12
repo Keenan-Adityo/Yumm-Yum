@@ -30,10 +30,10 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [Color.fromARGB(255, 53, 51, 51), Colors.black],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight),
+                  gradient: LinearGradient(colors: [
+                    Color.fromARGB(255, 53, 51, 51),
+                    Color(0xffD57F42)
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                   borderRadius: BorderRadius.vertical(
                       top: Radius.elliptical(
                           MediaQuery.of(context).size.width, 110.0))),
@@ -45,7 +45,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                   child: Column(
                     children: [
                       Text(
-                        "Let's start with\nAdmin!",
+                        "Login Admin",
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 25.0,
@@ -109,6 +109,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                                 child: Center(
                                   child: TextFormField(
                                     controller: userpasswordcontroller,
+                                    obscureText: true,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Please Enter Password';
@@ -136,7 +137,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                                       EdgeInsets.symmetric(horizontal: 20.0),
                                   width: MediaQuery.of(context).size.width,
                                   decoration: BoxDecoration(
-                                      color: Colors.black,
+                                      color: Color(0xffD57F42),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                     child: Text(

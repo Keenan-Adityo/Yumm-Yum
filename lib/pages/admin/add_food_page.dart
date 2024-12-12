@@ -1,11 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
-
-// import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-// import 'package:fooddeliveryapp/service/database.dart';
-// import 'package:fooddeliveryapp/widget/widget_support.dart';
-// import 'package:image_picker/image_picker.dart';
-// import 'package:random_string/random_string.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:random_string/random_string.dart';
+import 'package:yumm_yum/services/database.dart';
+import 'package:yumm_yum/widgets/widget_support.dart';
 
 class AddFoodPage extends StatefulWidget {
   const AddFoodPage({super.key});
@@ -15,49 +16,54 @@ class AddFoodPage extends StatefulWidget {
 }
 
 class _AddFoodPageState extends State<AddFoodPage> {
-  final List<String> fooditems = ['Ice-cream', 'Burger', 'Salad', 'Pizza'];
   String? value;
   TextEditingController namecontroller = new TextEditingController();
   TextEditingController pricecontroller = new TextEditingController();
   TextEditingController detailcontroller = new TextEditingController();
-  // final ImagePicker _picker = ImagePicker();
+  final ImagePicker _picker = ImagePicker();
   File? selectedImage;
+  String? base64SelectedImage;
 
   Future getImage() async {
-    // var image = await _picker.pickImage(source: ImageSource.gallery);
+    var image = await _picker.pickImage(source: ImageSource.gallery);
 
-    // selectedImage = File(image!.path);
-    setState(() {});
+    selectedImage = File(image!.path);
+    final bytes = await selectedImage!.readAsBytes();
+
+    setState(() {
+      base64SelectedImage = base64Encode(bytes);
+    });
+  }
+
+  Image _getImageFromBase64(String base64String) {
+    return Image.memory(base64Decode(base64String));
   }
 
   uploadItem() async {
-    // if (selectedImage != null &&
-    //     namecontroller.text != "" &&
-    //     pricecontroller.text != "" &&
-    //     detailcontroller.text != "") {
-    //   // String addId = randomAlphaNumeric(10);
-
-    //   // Reference firebaseStorageRef =
-    //   //     FirebaseStorage.instance.ref().child("blogImages").child(addId);
-    //   // final UploadTask task = firebaseStorageRef.putFile(selectedImage!);
-
-    //   // var downloadUrl = await (await task).ref.getDownloadURL();
-
-    //   Map<String, dynamic> addItem = {
-    //     "Image": downloadUrl,
-    //     "Name": namecontroller.text,
-    //     "Price": pricecontroller.text,
-    //     "Detail": detailcontroller.text
-    //   };
-    //   await DatabaseMethods().addFoodItem(addItem, value!).then((value) {
-    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //         backgroundColor: Colors.orangeAccent,
-    //         content: Text(
-    //           "Food Item has been added Successfully",
-    //           style: TextStyle(fontSize: 18.0),
-    //         )));
-    //   });
-    // }
+    if (base64SelectedImage != null &&
+        namecontroller.text != "" &&
+        pricecontroller.text != "" &&
+        detailcontroller.text != "") {
+      print("masuk if");
+      try {
+        await FirebaseFirestore.instance.collection("Food").add({
+          "name": namecontroller.text,
+          "price": double.parse(pricecontroller.text),
+          "detail": detailcontroller.text,
+          "stock": 1,
+          "image": base64SelectedImage,
+        });
+        debugPrint("kenapa in");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Food item added successfully!'),
+        ));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Food item added gagal!'),
+        ));
+      }
+    }
+    print("setelah if");
   }
 
   @override
@@ -74,8 +80,8 @@ class _AddFoodPageState extends State<AddFoodPage> {
             )),
         centerTitle: true,
         title: Text(
-          "Add Item",
-          // style: AppWidget.HeadlineTextFeildStyle(),
+          "Add Food",
+          style: AppWidget.HeadlineTextFeildStyle(),
         ),
       ),
       body: SingleChildScrollView(
@@ -86,8 +92,8 @@ class _AddFoodPageState extends State<AddFoodPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Upload the Item Picture",
-                // style: AppWidget.semiBoldTextFeildStyle(),
+                "Upload The Food Picture",
+                style: AppWidget.semiBoldTextFeildStyle(),
               ),
               SizedBox(
                 height: 20.0,
@@ -142,8 +148,8 @@ class _AddFoodPageState extends State<AddFoodPage> {
                 height: 30.0,
               ),
               Text(
-                "Item Name",
-                // style: AppWidget.semiBoldTextFeildStyle(),
+                "Food Name",
+                style: AppWidget.semiBoldTextFeildStyle(),
               ),
               SizedBox(
                 height: 10.0,
@@ -157,18 +163,17 @@ class _AddFoodPageState extends State<AddFoodPage> {
                 child: TextField(
                   controller: namecontroller,
                   decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Enter Item Name",
-                    // hintStyle: AppWidget.LightTextFeildStyle()
-                  ),
+                      border: InputBorder.none,
+                      hintText: "Enter Food Name",
+                      hintStyle: AppWidget.LightTextFeildStyle()),
                 ),
               ),
               SizedBox(
                 height: 30.0,
               ),
               Text(
-                "Item Price",
-                // style: AppWidget.semiBoldTextFeildStyle(),
+                "Food Price",
+                style: AppWidget.semiBoldTextFeildStyle(),
               ),
               SizedBox(
                 height: 10.0,
@@ -182,18 +187,17 @@ class _AddFoodPageState extends State<AddFoodPage> {
                 child: TextField(
                   controller: pricecontroller,
                   decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Enter Item Price",
-                    // hintStyle: AppWidget.LightTextFeildStyle()
-                  ),
+                      border: InputBorder.none,
+                      hintText: "Enter Food Price",
+                      hintStyle: AppWidget.LightTextFeildStyle()),
                 ),
               ),
               SizedBox(
                 height: 30.0,
               ),
               Text(
-                "Item Detail",
-                // style: AppWidget.semiBoldTextFeildStyle(),
+                "Food Detail",
+                style: AppWidget.semiBoldTextFeildStyle(),
               ),
               SizedBox(
                 height: 10.0,
@@ -208,51 +212,10 @@ class _AddFoodPageState extends State<AddFoodPage> {
                   maxLines: 6,
                   controller: detailcontroller,
                   decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Enter Item Detail",
-                    // hintStyle: AppWidget.LightTextFeildStyle()
-                  ),
+                      border: InputBorder.none,
+                      hintText: "Enter Food Detail",
+                      hintStyle: AppWidget.LightTextFeildStyle()),
                 ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Text(
-                "Select Category",
-                // style: AppWidget.semiBoldTextFeildStyle(),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    color: Color(0xFFececf8),
-                    borderRadius: BorderRadius.circular(10)),
-                child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                  items: fooditems
-                      .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style:
-                                TextStyle(fontSize: 18.0, color: Colors.black),
-                          )))
-                      .toList(),
-                  onChanged: ((value) => setState(() {
-                        this.value = value;
-                      })),
-                  dropdownColor: Colors.white,
-                  hint: Text("Select Category"),
-                  iconSize: 36,
-                  icon: Icon(
-                    Icons.arrow_drop_down,
-                    color: Colors.black,
-                  ),
-                  value: value,
-                )),
               ),
               SizedBox(
                 height: 30.0,
@@ -269,7 +232,7 @@ class _AddFoodPageState extends State<AddFoodPage> {
                       padding: EdgeInsets.symmetric(vertical: 5.0),
                       width: 150,
                       decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: Color(0xffD57F42),
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
                         child: Text(
