@@ -1,81 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:yumm_yum/pages/bottomnav.dart';
-import 'package:yumm_yum/pages/login.dart';
-import 'package:yumm_yum/services/database.dart';
-import 'package:yumm_yum/services/shared_pref.dart';
+import 'package:get/get.dart';
+import 'package:yumm_yum/controllers/user/signup_controller.dart';
 import 'package:yumm_yum/widgets/widget_support.dart';
 
-import 'package:random_string/random_string.dart';
-import 'package:yumm_yum/services/database.dart';
-import 'package:yumm_yum/services/shared_pref.dart';
+class SignUp extends StatelessWidget {
+  final SignupController signupController = Get.put(SignupController());
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
-
-  @override
-  State<SignUp> createState() => _SignUpState();
-}
-
-class _SignUpState extends State<SignUp> {
-  String email = "", password = "", name = "";
-
-  TextEditingController namecontroller = new TextEditingController();
-
-  TextEditingController passwordcontroller = new TextEditingController();
-
-  TextEditingController mailcontroller = new TextEditingController();
+  SignUp({super.key});
 
   final _formkey = GlobalKey<FormState>();
-
-  registration() async {
-    if (password != null) {
-      try {
-        print("masuk regis");
-        UserCredential userCredential = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: email, password: password);
-
-        ScaffoldMessenger.of(context).showSnackBar((SnackBar(
-            backgroundColor: Colors.redAccent,
-            content: Text(
-              "Registered Successfully",
-              style: TextStyle(fontSize: 20.0),
-            ))));
-        String Id = randomAlphaNumeric(10);
-        Map<String, dynamic> addUserInfo = {
-          "Name": namecontroller.text,
-          "Email": mailcontroller.text,
-          "Wallet": "0",
-          "Id": Id,
-        };
-        await DatabaseMethods().addUserDetail(addUserInfo, Id);
-        await SharedPreferenceHelper().saveUserName(namecontroller.text);
-        await SharedPreferenceHelper().saveUserEmail(mailcontroller.text);
-        await SharedPreferenceHelper().saveUserWallet('0');
-        await SharedPreferenceHelper().saveUserId(Id);
-
-        // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => BottomNav()));
-      } on FirebaseException catch (e) {
-        if (e.code == 'weak-password') {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: Colors.orangeAccent,
-              content: Text(
-                "Password Provided is too Weak",
-                style: TextStyle(fontSize: 18.0),
-              )));
-        } else if (e.code == "email-already-in-use") {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: Colors.orangeAccent,
-              content: Text(
-                "Account Already exsists",
-                style: TextStyle(fontSize: 18.0),
-              )));
-        }
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,14 +44,14 @@ class _SignUpState extends State<SignUp> {
               margin: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
               child: Column(
                 children: [
-                  // Center(
-                  //     child: Image.asset(
-                  //   "assets/images/logo.png",
-                  //   width: MediaQuery.of(context).size.width / 1.5,
-                  //   fit: BoxFit.cover,
-                  // )),
+                  Center(
+                      child: Image.asset(
+                    "assets/images/yummyum.png",
+                    width: MediaQuery.of(context).size.width / 3,
+                    fit: BoxFit.cover,
+                  )),
                   SizedBox(
-                    height: 50.0,
+                    height: 25.0,
                   ),
                   Material(
                     elevation: 5.0,
@@ -126,7 +59,7 @@ class _SignUpState extends State<SignUp> {
                     child: Container(
                       padding: EdgeInsets.only(left: 20.0, right: 20.0),
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 1.8,
+                      height: 410,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20)),
@@ -145,7 +78,7 @@ class _SignUpState extends State<SignUp> {
                               height: 30.0,
                             ),
                             TextFormField(
-                              controller: namecontroller,
+                              controller: signupController.name,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please Enter Name';
@@ -161,7 +94,7 @@ class _SignUpState extends State<SignUp> {
                               height: 30.0,
                             ),
                             TextFormField(
-                              controller: mailcontroller,
+                              controller: signupController.email,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please Enter E-mail';
@@ -177,7 +110,7 @@ class _SignUpState extends State<SignUp> {
                               height: 30.0,
                             ),
                             TextFormField(
-                              controller: passwordcontroller,
+                              controller: signupController.password,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please Enter Password';
@@ -191,18 +124,11 @@ class _SignUpState extends State<SignUp> {
                                   prefixIcon: Icon(Icons.password_outlined)),
                             ),
                             SizedBox(
-                              height: 80.0,
+                              height: 40.0,
                             ),
                             GestureDetector(
                               onTap: () async {
-                                if (_formkey.currentState!.validate()) {
-                                  setState(() {
-                                    email = mailcontroller.text;
-                                    name = namecontroller.text;
-                                    password = passwordcontroller.text;
-                                  });
-                                }
-                                registration();
+                                signupController.signup();
                               },
                               child: Material(
                                 elevation: 5.0,
@@ -231,12 +157,11 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                   SizedBox(
-                    height: 70.0,
+                    height: 50.0,
                   ),
                   GestureDetector(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => LogIn()));
+                        Get.back();
                       },
                       child: Text(
                         "Already have an account? Login",

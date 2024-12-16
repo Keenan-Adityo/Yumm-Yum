@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:yumm_yum/pages/admin/add_food_page.dart';
+import 'package:get/get.dart';
 import 'package:yumm_yum/widgets/widget_support.dart';
 
-class AdminPage extends StatefulWidget {
+class AdminPage extends StatelessWidget {
   const AdminPage({super.key});
 
-  @override
-  State<AdminPage> createState() => _AdminPageState();
-}
-
-class _AdminPageState extends State<AdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,8 +23,7 @@ class _AdminPageState extends State<AdminPage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AddFoodPage()));
+                Get.toNamed('/adminaddfood');
               },
               child: Material(
                 elevation: 10.0,

@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:yumm_yum/pages/signup.dart';
 import 'package:yumm_yum/pages/login.dart';
 import 'package:yumm_yum/pages/bottomnav.dart';
+import 'package:yumm_yum/router/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,18 +15,15 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Yumm Yum',
       theme: ThemeData(
         primarySwatch: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SignUp(), // Menampilkan SignUp sebagai halaman awal
-      routes: {
-        '/login': (context) => LogIn(), // Rute ke halaman login
-        '/bottomNav': (context) => BottomNav(), // Rute ke halaman BottomNav
-      },
+      initialRoute: '/',
+      getPages: appRoutes.routes,
     );
   }
 }
