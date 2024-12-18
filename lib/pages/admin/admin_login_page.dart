@@ -1,20 +1,13 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:yumm_yum/pages/admin/admin_page.dart';
-// import 'package:fooddeliveryapp/admin/home_admin.dart';
+import 'package:get/get.dart';
+import 'package:yumm_yum/controllers/admin/admin_login_controller.dart';
 
-class AdminLoginPage extends StatefulWidget {
-  const AdminLoginPage({super.key});
-
-  @override
-  State<AdminLoginPage> createState() => _AdminLoginPageState();
-}
-
-class _AdminLoginPageState extends State<AdminLoginPage> {
+class AdminLoginPage extends StatelessWidget {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-  TextEditingController usernamecontroller = new TextEditingController();
-  TextEditingController userpasswordcontroller = new TextEditingController();
+  final AdminLoginController adminLoginController =
+      Get.put(AdminLoginController());
+
+  AdminLoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +72,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                                     borderRadius: BorderRadius.circular(10)),
                                 child: Center(
                                   child: TextFormField(
-                                    controller: usernamecontroller,
+                                    controller: adminLoginController.username,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Please Enter Username';
@@ -108,7 +101,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                                     borderRadius: BorderRadius.circular(10)),
                                 child: Center(
                                   child: TextFormField(
-                                    controller: userpasswordcontroller,
+                                    controller: adminLoginController.password,
                                     obscureText: true,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -129,7 +122,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  LoginAdmin();
+                                  adminLoginController.loginAdmin();
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 12.0),
@@ -161,33 +154,5 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         ),
       ),
     );
-  }
-
-  LoginAdmin() {
-    Route route = MaterialPageRoute(builder: (context) => AdminPage());
-    FirebaseFirestore.instance.collection("Admin").get().then((snapshot) {
-      snapshot.docs.forEach((result) {
-        if (result.data()['id'] != usernamecontroller.text.trim()) {
-          print(result.data()['id']);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: Colors.orangeAccent,
-              content: Text(
-                "Your id is not correct",
-                style: TextStyle(fontSize: 18.0),
-              )));
-        } else if (result.data()['password'] !=
-            userpasswordcontroller.text.trim()) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: Colors.orangeAccent,
-              content: Text(
-                "Your password is not correct",
-                style: TextStyle(fontSize: 18.0),
-              )));
-        } else {
-          Route route = MaterialPageRoute(builder: (context) => AdminPage());
-          Navigator.pushReplacement(context, route);
-        }
-      });
-    });
   }
 }
