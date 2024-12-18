@@ -10,7 +10,8 @@ class LoginController extends GetxController {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email.text, password: password.text);
-      Get.toNamed('/bottomNav');
+
+      Get.offAllNamed('/bottomNav');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         // Jika email tidak ditemukan

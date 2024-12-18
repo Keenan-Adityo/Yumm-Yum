@@ -1,7 +1,8 @@
-import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class HomeController extends GetxController {
+class AdminPageController extends GetxController {
   var foodItems = <QueryDocumentSnapshot>[].obs;
 
   var errorMessage = ''.obs;
@@ -27,6 +28,18 @@ class HomeController extends GetxController {
     } catch (e) {
       errorMessage.value = e.toString();
       isLoading.value = false;
+    }
+  }
+
+  void updateFoodStock(String documentId, int newStock) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('Food')
+          .doc(documentId)
+          .update({'stock': newStock});
+      print("Stock updated successfully!");
+    } catch (e) {
+      print("Error updating stock: $e");
     }
   }
 }

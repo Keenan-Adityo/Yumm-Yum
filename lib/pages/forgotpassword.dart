@@ -1,43 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:yumm_yum/controllers/user/forgotpassword_controller.dart';
 import 'package:yumm_yum/pages/signup.dart';
 
-class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({super.key});
-
-  @override
-  State<ForgotPassword> createState() => _ForgotPasswordState();
-}
-
-class _ForgotPasswordState extends State<ForgotPassword> {
-  // Controller untuk email input
-  TextEditingController mailcontroller = new TextEditingController();
-
-  // Variabel untuk menyimpan email
-  String email = "";
-
-  // Kunci untuk form validasi
+class ForgotPassword extends StatelessWidget {
   final _formkey = GlobalKey<FormState>();
+  final ForgotpasswordController forgotpasswordController =
+      Get.put(ForgotpasswordController());
 
-  // Fungsi untuk mengirim email reset password
-  resetPassword() async {
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-        "Password Reset Email has been sent !",
-        style: TextStyle(fontSize: 18.0),
-      )));
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-          "No user found for that email.",
-          style: TextStyle(fontSize: 18.0),
-        )));
-      }
-    }
-  }
+  ForgotPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +56,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: TextFormField(
-                              controller: mailcontroller,
+                              controller:
+                                  forgotpasswordController.emailController,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please Enter Email';
@@ -110,10 +83,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           GestureDetector(
                             onTap: () {
                               if (_formkey.currentState!.validate()) {
-                                setState(() {
-                                  email = mailcontroller.text;
-                                });
-                                resetPassword(); // Memanggil fungsi resetPassword
+                                forgotpasswordController
+                                    .resetPassword(); // Memanggil fungsi resetPassword
                               }
                             },
                             child: Container(
@@ -149,10 +120,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SignUp()));
+                                  Get.offAndToNamed('/signup');
                                 },
                                 child: Text(
                                   "Create",

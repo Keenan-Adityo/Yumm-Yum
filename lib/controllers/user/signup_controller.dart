@@ -20,8 +20,8 @@ class SignupController extends GetxController {
         Get.snackbar('Success', 'Registered Successfully');
         String Id = randomAlphaNumeric(10);
         Map<String, dynamic> addUserInfo = {
-          "Name": name,
-          "Email": email,
+          "Name": name.text,
+          "Email": email.text,
           "Wallet": "0",
           "Id": Id,
         };
@@ -31,7 +31,7 @@ class SignupController extends GetxController {
         await SharedPreferenceHelper().saveUserWallet('0');
         await SharedPreferenceHelper().saveUserId(Id);
 
-        Get.toNamed('/bottomNav');
+        Get.offAllNamed('/bottomNav');
       } on FirebaseException catch (e) {
         if (e.code == 'weak-password') {
           Get.snackbar('Error', 'Password Provided is too Weak');

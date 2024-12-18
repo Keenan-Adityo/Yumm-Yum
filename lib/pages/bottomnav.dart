@@ -1,7 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:yumm_yum/controllers/user/order_controller.dart';
 import 'package:yumm_yum/pages/home.dart';
-import 'package:yumm_yum/pages/order.dart';
+import 'package:yumm_yum/pages/order_page.dart';
 import 'package:yumm_yum/pages/profile.dart';
 import 'package:yumm_yum/pages/wallet.dart';
 
@@ -13,20 +15,22 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
+  final OrderController orderController = Get.put(OrderController());
   int currentTabIndex = 0;
 
   late List<Widget> pages;
   late Widget currentPage;
   late Home homepage;
   late Profile profile;
-  late Order order;
+  late OrderPage order;
 
   @override
   void initState() {
     homepage = Home();
-    order = Order();
+    order = OrderPage();
     profile = Profile();
     pages = [homepage, order, profile];
+    orderController.fetchOrder();
     super.initState();
   }
 
